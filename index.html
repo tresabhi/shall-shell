@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script>
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      const root = document.documentElement;
+
+      function updateTheme(event) {
+        if (event.matches) {
+          root.classList.add("dark");
+        } else {
+          root.classList.remove("dark");
+        }
+      }
+
+      updateTheme(mediaQuery);
+      mediaQuery.addEventListener("change", updateTheme);
+    </script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
