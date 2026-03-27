@@ -11,6 +11,10 @@
     {
       "identifier": "fs:read-files",
       "allow": [{ "path": "*/**" }]
+    },
+    {
+      "identifier": "fs:write-files",
+      "allow": [{ "path": "*/**" }]
     }
   ]
 }

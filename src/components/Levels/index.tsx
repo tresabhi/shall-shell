@@ -4,7 +4,7 @@ import { Level } from "../Level";
 import styles from "./index.module.css";
 
 export function Levels() {
-  const levels = useJson<Levels>("levels.json");
+  const [levels] = useJson<Levels>("levels.json");
 
   return (
     <div className={styles.levels}>

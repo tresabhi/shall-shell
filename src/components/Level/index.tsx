@@ -8,12 +8,23 @@ interface Props {
 }
 
 export function Level({ level: id }: Props) {
-  const level = useJson<Level>(`levels/${id}.json`);
+  const [level, draftLevel, writeLevel] = useJson<Level>(`levels/${id}.json`);
 
   return (
     <div className={styles.level}>
       <div className={styles.label}>
-        <span className={styles.text}>{level.label}</span>
+        <input
+          className={styles.input}
+          type="text"
+          defaultValue={level.label}
+          onBlur={(event) => {
+            draftLevel((draft) => {
+              draft.label = event.target.value;
+            });
+
+            writeLevel();
+          }}
+        />
       </div>
 
       {level.nodes.map((node) => (
