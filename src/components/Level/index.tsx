@@ -18,11 +18,11 @@ export function Level({ level: id }: Props) {
           type="text"
           defaultValue={level.label}
           onBlur={(event) => {
-            draftLevel((draft) => {
-              draft.label = event.target.value;
-            });
-
-            writeLevel();
+            writeLevel(
+              draftLevel((draft) => {
+                draft.label = event.target.value;
+              }),
+            );
           }}
         />
       </div>

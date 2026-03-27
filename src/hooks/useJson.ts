@@ -10,16 +10,28 @@ export function useJson<Type>(path: string) {
   const text = useMemo(() => decoder.decode(file), [file]);
   const [state, setState] = useState<Type>(JSON.parse(text));
 
-  const draft = useCallback((mutator: (state: Type) => void) => {
-    setState(produce(state, mutator));
-  }, []);
+  const draft = useCallback(
+    (mutator: (state: Type) => void) => {
+      // TODO: track diff and only return newState if there are changes
+      const newState = produce(state, mutator);
 
-  const write = useCallback(() => {
-    const string = JSON.stringify(state, null, 2);
-    const encoded = encoder.encode(string);
+      setState(newState);
 
-    writeFile(encoded);
-  }, []);
+      return newState;
+    },
+    [state],
+  );
+
+  const write = useCallback(
+    (_state = state) => {
+      const string = JSON.stringify(_state, null, 2);
+      const encoded = encoder.encode(string);
+
+      // TODO: write only if newState is different by reference
+      writeFile(encoded);
+    },
+    [state],
+  );
 
   return [state, draft, write] as const;
 }
